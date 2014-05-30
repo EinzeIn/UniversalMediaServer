@@ -56,6 +56,8 @@ public class Request extends HTTPResource {
 	private final static String HTTP_206_OK_10 = "HTTP/1.0 206 Partial Content";
 	private final static String CONTENT_TYPE_UTF8 = "CONTENT-TYPE: text/xml; charset=\"utf-8\"";
 	private final static String CONTENT_TYPE = "Content-Type: text/xml; charset=\"utf-8\"";
+	private final static String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin: *";
+	private final static String ACCESS_CONTROL_ALLOW_HEADERS = "Access-Control-Allow-Headers: Soapaction"
 	private static SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss", Locale.US);
 	private final String method;
 	private String argument;
@@ -384,6 +386,8 @@ public class Request extends HTTPResource {
 			}
 		} else if (method.equals("POST") && (argument.contains("MS_MediaReceiverRegistrar_control") || argument.contains("mrr/control"))) {
 			output(output, CONTENT_TYPE_UTF8);
+			output(output, ACCESS_CONTROL_ALLOW_ORIGIN);
+			output(output, ACCESS_CONTROL_ALLOW_HEADERS);
 			response.append(HTTPXMLHelper.XML_HEADER);
 			response.append(CRLF);
 			response.append(HTTPXMLHelper.SOAP_ENCODING_HEADER);
@@ -399,6 +403,8 @@ public class Request extends HTTPResource {
 			response.append(CRLF);
 		} else if (method.equals("POST") && argument.endsWith("upnp/control/connection_manager")) {
 			output(output, CONTENT_TYPE_UTF8);
+			output(output, ACCESS_CONTROL_ALLOW_ORIGIN);
+			output(output, ACCESS_CONTROL_ALLOW_HEADERS);
 			if (soapaction != null && soapaction.indexOf("ConnectionManager:1#GetProtocolInfo") > -1) {
 				response.append(HTTPXMLHelper.XML_HEADER);
 				response.append(CRLF);
@@ -458,6 +464,8 @@ public class Request extends HTTPResource {
 			}
 		} else if (method.equals("POST") && argument.endsWith("upnp/control/content_directory")) {
 			output(output, CONTENT_TYPE_UTF8);
+			output(output, ACCESS_CONTROL_ALLOW_ORIGIN);
+			output(output, ACCESS_CONTROL_ALLOW_HEADERS);
 
 			if (soapaction != null && soapaction.indexOf("ContentDirectory:1#GetSystemUpdateID") > -1) {
 				response.append(HTTPXMLHelper.XML_HEADER);
